@@ -1,22 +1,15 @@
 import express from "express";
-import mongoose from "mongoose";
-import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 import connectToDB from "./db";
-import router from "./routes";
+import userRouter from "./routes/user.routers";
+import contentRouter from "./routes/content.routers";
 const app = express();
+dotenv.config();
 app.use(express.json());
 connectToDB();
 
-app.use("/api/v1/auth", router);
-// app.post("/api/v1/signup", (req, res) => {});
-
-// app.post("/api/v1/signin", (req, res) => {});
-
-// app.post("/api/v1/content", (req, res) => {});
-
-// app.get("/api/v1/content", (req, res) => {});
-
-// app.delete("/api/v1/content", (req, res) => {});
+app.use("/api/v1/auth", userRouter);
+app.use("/api/v1/content", contentRouter);
 
 // app.post("/api/v1/brain/share", (req, res) => {});
 

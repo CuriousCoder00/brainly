@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config();
 
-const uri = process.env.MONGO_URI || "mongodb://localhost:27017/brain";
+const uri = process.env.MONGO_URI as string;
 // Connect to MongoDB
 export default function connectToDB() {
   mongoose

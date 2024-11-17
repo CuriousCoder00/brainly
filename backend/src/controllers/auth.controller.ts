@@ -3,6 +3,8 @@ import User from "../schemas/user.schema";
 import { validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 
 const signup = async (req: Request, res: Response): Promise<void> => {
   const errors = validationResult(req);
