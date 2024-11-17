@@ -6,10 +6,15 @@ const Header = () => {
   return (
     <header className="fixed top-0 w-full p-3 z-50 px-12">
       <nav className="flex items-center justify-between ">
-        <div className="font-bold text-2xl">Brainly</div>
+        <Link href={"/"} className="font-bold text-2xl">
+          Brainly
+        </Link>
         <div className="flex items-center justify-center gap-4">
           <Link href={"/"} className="">
             Home
+          </Link>
+          <Link href={"/game"} className="">
+            Play
           </Link>
           <Link href={"/auth/signup"} className="">
             Signup
