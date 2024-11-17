@@ -15,12 +15,14 @@ const AuthField = ({
   name,
   placeholder,
   type,
+  disabled,
 }: {
   form: any;
   label: string;
   name: string;
   placeholder: string;
   type?: string;
+  disabled?: boolean;
 }) => {
   return (
     <FormField
@@ -34,6 +36,7 @@ const AuthField = ({
               {...field}
               placeholder={placeholder}
               type={type ? type : "text"}
+              disabled={disabled ? disabled : false}
             />
           </FormControl>
           <FormMessage className="text-xs text-red-500 text-end" />
