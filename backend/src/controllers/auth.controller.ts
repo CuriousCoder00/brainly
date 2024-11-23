@@ -86,7 +86,14 @@ const login = async (req: Request, res: Response): Promise<void> => {
         if (err) {
           throw err;
         }
-        res.json({ token, data:user });
+        res.send({
+          token,
+          user: {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+          },
+        });
       }
     );
   } catch (err: any) {

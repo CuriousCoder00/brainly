@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import AuthForm from "./auth-form";
 import AuthField from "./auth-input-field";
@@ -7,10 +7,10 @@ import { SignupInput, signupSchema } from "@/lib/validations/auth.validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { BASE_URL } from "@/lib/data";
 
 const SignupForm = () => {
   const [isPending, startTransition] = React.useTransition();
-  const baseUrl = process.env.NEXT_PUBLIC_API_URL;
   const form = useForm<SignupInput>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
@@ -21,7 +21,7 @@ const SignupForm = () => {
   });
   const signupHandler = async (data: SignupInput) => {
     startTransition(async () => {
-      await fetch(`${baseUrl}/auth/signup`, {
+      await fetch(`${BASE_URL}/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
