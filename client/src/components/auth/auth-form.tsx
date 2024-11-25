@@ -10,7 +10,7 @@ const AuthForm = ({
   form: any;
 }) => {
   return (
-    <div className="flex flex-col items-start justify-center mx-auto w-96 shadow-inner dark:shadow-neutral-600 shadow-neutral-300 p-4 md:rounded-xl sm:rounded-lg gap-3">
+    <div className="flex flex-col items-start justify-center mx-auto w-96 shadow-inner dark:shadow-neutral-600 shadow-neutral-300 p-4 md:rounded-xl sm:rounded-lg gap-3 bg-slate-200 dark:bg-black">
       <div className="flex flex-col items-center justify-center w-full my-4">
         <h1 className="font-bold text-xl">Welcome to brainly</h1>
         <p className="text-center">
