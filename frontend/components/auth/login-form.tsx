@@ -11,10 +11,11 @@ import { BASE_URL } from "@/lib/data";
 import axios from "axios";
 import useSession from "@/hooks/use-session";
 import { Context } from "@/lib/context/context-provider";
+import { cookies } from "next/headers";
 
 const LoginForm = () => {
   const [isPending, startTransition] = React.useTransition();
-  const { setUser, setToken, setAuthenticated } = useContext(Context);
+  const { setToken, setAuthenticated, authenticated } = useContext(Context);
   const form = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -26,15 +27,11 @@ const LoginForm = () => {
   const loginHandler = async (data: LoginInput) => {
     startTransition(async () => {
       await axios.post(`${BASE_URL}/auth/login`, data).then((res) => {
-        if (res.status === 200) {
-          setUser(res.data.user);
-          setToken(res.data.token);
-          setAuthenticated(true);
-          localStorage.setItem("token", res.data.token);
-          localStorage.setItem("user", JSON.stringify(res.data.user));
-          window.location.href = "/home";
-        }
-        console.log(res.data);
+        setToken(res.data.token);
+        setAuthenticated(true);
+        window.location.href = "/home";
+        localStorage.setItem("session", JSON.stringify(res.data));
+        localStorage.setItem("token", res.data.token);
       });
     });
   };

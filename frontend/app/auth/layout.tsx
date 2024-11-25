@@ -8,7 +8,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
     if (session.authenticated) {
       window.location.href = "/home";
     }
-  }, []);
+  });
   return (
     <div className="flex items-center justify-center w-screen h-screen mx-auto">
       {children}
