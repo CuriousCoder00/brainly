@@ -36,6 +36,7 @@ const AuthField = ({
               placeholder={placeholder}
               type={type ? type : "text"}
               disabled={disabled ? disabled : false}
+              className="bg-white dark:bg-zinc-900"
             />
           </FormControl>
           <FormMessage className="text-xs text-red-500 text-end" />
