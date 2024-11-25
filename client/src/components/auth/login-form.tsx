@@ -7,6 +7,8 @@ import { LoginInput, loginSchema } from "@/lib/validations/auth.validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { BASE_API_URL } from "@/lib/data";
 
 const LoginForm = () => {
   const [isPending, startTransition] = React.useTransition();
@@ -20,7 +22,11 @@ const LoginForm = () => {
 
   const loginHandler = async (data: LoginInput) => {
     startTransition(() => {
-      
+      axios.post(`${BASE_API_URL}/auth/login`, data).then((res) => {
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("session", JSON.stringify(res.data));
+        localStorage.setItem("authenticated", "true");
+      });
     });
   };
   return (
@@ -30,19 +36,23 @@ const LoginForm = () => {
         onSubmit={form.handleSubmit(loginHandler)}
       >
         <AuthField
+          disabled={isPending}
           form={form}
           label={"Email Address"}
           name={"email"}
           placeholder={"john.doe@gmail.com"}
         />
         <AuthField
+          disabled={isPending}
           form={form}
           label={"Password"}
           name={"password"}
           placeholder={"******"}
           type="password"
         />
-        <Button type="submit">Login</Button>
+        <Button disabled={isPending} type="submit">
+          Login
+        </Button>
         <div className="flex justify-end mt-2">
           <Link
             className="text-sm text-white hover:text-blue-400"
