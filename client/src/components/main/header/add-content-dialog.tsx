@@ -32,8 +32,17 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { MultiSelect } from "@/components/ui/multi-select";
+import { BASE_API_URL } from "@/lib/data";
+import axios from "axios";
 
 const AddContent = () => {
+  const [tagsList, setTagsList] = useState<{ value: string; label: string }[]>(
+    []
+  );
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
   const form = useForm<ContentInput>({
     resolver: zodResolver(contentInput),
     defaultValues: {
@@ -45,6 +54,18 @@ const AddContent = () => {
       userId: "",
     },
   });
+
+  const getTags = async () => {
+    const { data } = await axios.get(`${BASE_API_URL}/tag/`);
+    const tags = data.data.map((tag: any) => ({
+      value: tag.name,
+      label: tag.name.charAt(0).toUpperCase() + tag.name.slice(1),
+    }));
+    setTagsList(tags);
+  };
+  useEffect(() => {
+    getTags();
+  }, []);
   return (
     <Dialog>
       <DialogTrigger>
@@ -149,11 +170,15 @@ const AddContent = () => {
                 <FormItem>
                   <FormLabel>Content Tags</FormLabel>
                   <FormControl>
-                    <Input
+                    <MultiSelect
                       {...field}
-                      placeholder="Title"
-                      type="text"
-                      className="bg-white dark:bg-black"
+                      options={tagsList}
+                      onValueChange={setSelectedTags}
+                      defaultValue={selectedTags}
+                      placeholder="Select frameworks"
+                      variant="inverted"
+                      animation={2}
+                      maxCount={3}
                     />
                   </FormControl>
                   <FormMessage className="text-xs text-red-500 text-end" />

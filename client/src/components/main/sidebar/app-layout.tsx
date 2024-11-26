@@ -6,7 +6,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main className="flex flex-col items-start justify-start w-full relative dark:bg-zinc-900 bg-zinc-50">
+      <main className="flex flex-col items-start justify-start w-full relative">
         <SidebarTrigger className="absolute top-2 left-2" />
         <AppHeader />
         <div className="flex items-start justify-start w-full h-full p-4">
