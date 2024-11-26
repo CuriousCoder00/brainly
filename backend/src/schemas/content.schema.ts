@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
+const contentTypes = ["image", "video", "article", "audio"];
+
 const contentSchema = new Schema({
   title: {
     type: String,
@@ -10,13 +12,25 @@ const contentSchema = new Schema({
     type: String,
     required: true,
   },
+  type: {
+    type: String,
+    enum: contentTypes,
+    required: true,
+  },
   link: {
     type: String,
     required: true,
   },
+  tags: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Tag",
+    },
+  ],
   userId: {
     type: Schema.Types.ObjectId,
     ref: "User",
+    required: true,
   },
 });
 

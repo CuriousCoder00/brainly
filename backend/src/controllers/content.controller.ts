@@ -2,6 +2,14 @@ import { Request, Response } from "express";
 import Content from "../schemas/content.schema";
 import { validationResult } from "express-validator";
 
+declare module "express" {
+  export interface Request {
+    user?: {
+      _id: string;
+    };
+  }
+}
+
 export const createContent = async (
   req: Request,
   res: Response
@@ -11,14 +19,17 @@ export const createContent = async (
     res.status(400).json({ errors: errors.array() });
     return;
   }
-
-
-  const { title, body, link } = req.body;
-
+  const { title, body, link, tags, userId } = req.body;
   try {
-    const content = new Content({ title, body, link });
+    const content = new Content({
+      title,
+      body,
+      link,
+      tags,
+      userId,
+    });
     const data = await content.save();
-    res.json({ success: true, data:data });
+    res.json({ success: true, data: data });
   } catch (err: any) {
     console.error(err.message);
     res.status(500).send({ success: false, message: "Internal Server error." });
@@ -30,7 +41,24 @@ export const getContent = async (
   res: Response
 ): Promise<void> => {
   try {
-    const data = await Content.find();
+    //find content in Content table with userId
+    const data = await Content.find().populate({
+      path: "userId",
+      select: "name email",
+    });
+    res.json({ success: true, data });
+  } catch (err: any) {
+    console.error(err.message);
+    res.status(500).send({ success: false, message: "Internal Server error." });
+  }
+};
+
+export const getContentByUserId = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const data = await Content.find({ userId: req.params.userId });
     res.json({ success: true, data });
   } catch (err: any) {
     console.error(err.message);
@@ -65,12 +93,12 @@ export const updateContent = async (
     return;
   }
 
-  const { title, body, link } = req.body;
+  const { title, body, link, tags } = req.body;
 
   try {
     const data = await Content.findByIdAndUpdate(
       req.params.id,
-      { title, body, link },
+      { title, body, link, tags },
       { new: true }
     );
     if (!data) {
