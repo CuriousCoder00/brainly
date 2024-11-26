@@ -18,28 +18,13 @@ import { Link, useLocation } from "react-router-dom";
 const items = [
   {
     title: "Home",
-    url: "#",
+    url: "/",
     icon: Home,
   },
   {
     title: "Twitter",
     url: "#",
     icon: FaTwitter,
-  },
-  {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
   },
 ];
 
@@ -61,9 +46,9 @@ export function AppSidebar() {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild className="rounded-none">
                     <Link
-                      className={`dark:hover:text-sky-500 hover:text-sky-700 transition-colors duration-200 hover:border-l-4 hover:dark:border-l-sky-500 hover:border-l-sky-700 ${
+                      className={`dark:hover:text-sky-500 hover:text-sky-700 transition-colors duration-200 hover:border-l-4 hover:dark:border-l-sky-500 hover:border-l-sky-700 hover:bg-zinc-200 ${
                         location.pathname === item.url
-                          ? "border-l-4 dark:border-l-sky-500 border-l-sky-700"
+                          ? "border-l-4 dark:border-l-sky-500 border-l-sky-700 dark:bg-zinc-900 bg-zinc-200"
                           : ""
                       }`}
                       to={item.url}
