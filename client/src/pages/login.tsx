@@ -9,7 +9,7 @@ const Login = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (session) {
-      navigate("/main");
+      navigate("/");
     }
   }, [navigate, session]);
   return (

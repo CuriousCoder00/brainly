@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/sidebar";
 import ThemeToggler from "@/lib/theme-toggle";
 import { FaTwitter } from "react-icons/fa";
+import SignOutButton from "./auth/signout-button";
 
 const items = [
   {
@@ -65,6 +66,7 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SignOutButton />
       <ThemeToggler forSidebar />
     </Sidebar>
   );
