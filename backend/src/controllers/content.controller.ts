@@ -19,7 +19,7 @@ export const createContent = async (
     res.status(400).json({ errors: errors.array() });
     return;
   }
-  const { title, body, link, type, tags, userId } = req.body;
+  const { title, body, link, type, tags, user } = req.body;
   try {
     const content = new Content({
       title,
@@ -27,7 +27,7 @@ export const createContent = async (
       link,
       tags,
       type,
-      userId,
+      user,
     });
     const data = await content.save();
     res.json({ success: true, data: data });
@@ -64,13 +64,13 @@ export const getContentByUserId = async (
   res: Response
 ): Promise<void> => {
   try {
-    const data = await Content.find({ userId: req.params.userId })
+    const data = await Content.find({ user: req.params.user })
       .populate({
         path: "tags",
         select: "name",
       })
       .populate({
-        path: "userId",
+        path: "user",
         select: "name email",
       });
     res.json({ success: true, data });

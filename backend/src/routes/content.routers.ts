@@ -16,7 +16,7 @@ const contentRouter = express.Router();
 
 contentRouter.post("/", contentValidator, userMiddleware, createContent);
 contentRouter.get("/", contentValidator, userMiddleware, getContent);
-contentRouter.get("/u/:userId", getContentByUserId);
+contentRouter.get("/u/:user", getContentByUserId);
 contentRouter.get("/:id", getContentById);
 contentRouter.put("/:id", contentUpdateValidator, updateContent);
 contentRouter.delete("/:id", deleteContent);

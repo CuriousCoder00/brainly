@@ -73,7 +73,7 @@ const AddContent = () => {
         `${BASE_API_URL}/content`,
         {
           ...data,
-          userId: session.user.id,
+          user: session.user.id,
         },
         {
           headers: {

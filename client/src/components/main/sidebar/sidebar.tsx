@@ -49,7 +49,7 @@ export function AppSidebar() {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild className="rounded-none">
                     <Link
-                      className={`dark:hover:text-sky-500 hover:text-sky-700 transition-colors duration-200 hover:border-l-4 hover:dark:border-l-sky-500 hover:border-l-sky-700 hover:bg-zinc-200 ${
+                      className={`dark:hover:text-sky-500 hover:text-sky-700 transition-colors duration-200 hover:border-l-4 hover:dark:border-l-sky-500 hover:border-l-sky-700 hover:bg-zinc-200 dark:hover:bg-zinc-900 ${
                         location.pathname === item.url
                           ? "border-l-4 dark:border-l-sky-500 border-l-sky-700 dark:bg-zinc-900 bg-zinc-200"
                           : ""

@@ -9,3 +9,24 @@ export const contentInput = z.object({
 });
 
 export type ContentInput = z.infer<typeof contentInput>;
+
+export const fetchContentFormat = z.object({
+  id: z.string(),
+  title: z.string(),
+  body: z.string(),
+  link: z.string(),
+  tags: z.array(
+    z.object({
+      _id: z.string(),
+      name: z.string(),
+    })
+  ),
+  type: z.enum(["image", "video", "article", "audio"]),
+  user: z.object({
+    _id: z.string(),
+    name: z.string(),
+    email: z.string(),
+  }),
+});
+
+export type FetchContentFormat = z.infer<typeof fetchContentFormat>;

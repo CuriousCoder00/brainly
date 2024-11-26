@@ -6,7 +6,7 @@ export const contentValidator = [
   body("link", "Link is required").not().isEmpty(),
   body("tags", "Tags are required").isArray({ min: 1 }),
   body("type", "Type is required").not().isEmpty(),
-  body("userId", "User is required").not().isEmpty(),
+  body("user", "User is required").not().isEmpty(),
 ];
 
 export const contentUpdateValidator = [
