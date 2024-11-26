@@ -11,9 +11,11 @@ import axios from "axios";
 import { BASE_API_URL } from "@/lib/data";
 import { useSetRecoilState } from "recoil";
 import { authenticatedState } from "@/store/atoms/user";
+import { useToast } from "@/hooks/use-toast";
 
 const LoginForm = () => {
-  const [isPending, startTransition] = React.useTransition();
+  const [isPending, setIsPending] = React.useState<boolean>(false);
+  const { toast } = useToast();
   const setAuthenticated = useSetRecoilState(authenticatedState);
   const navigate = useNavigate();
   const form = useForm<LoginInput>({
@@ -25,16 +27,41 @@ const LoginForm = () => {
   });
 
   const loginHandler = async (data: LoginInput) => {
-    startTransition(() => {
-      axios.post(`${BASE_API_URL}/auth/login`, data).then((res) => {
+    setIsPending(true);
+    try {
+      const res = await axios.post(`${BASE_API_URL}/auth/login`, data);
+      if (res.status === 200 && res.data.status === "success") {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("session", JSON.stringify(res.data));
-        
         setAuthenticated(true);
-        navigate("/main");
+        toast({
+          title: res?.data.msg,
+          description: "You have successfully logged in",
+        });
+        navigate("/");
+        setIsPending(false);
+      }
+      if (res.data.status === "failed") {
+        toast({
+          variant: "destructive",
+          type: "background",
+          title: res.data.error,
+          description: "An error occured while trying to login",
+        });
+        setIsPending(false);
+      }
+      setIsPending(false);
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        type: "background",
+        title: error.response.data.error,
+        description: "An error occured while trying to login",
       });
-    });
+      setIsPending(false);
+    }
   };
+
   return (
     <AuthForm form={form}>
       <form

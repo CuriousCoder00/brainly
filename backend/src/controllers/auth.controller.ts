@@ -9,7 +9,7 @@ dotenv.config();
 const signup = async (req: Request, res: Response): Promise<void> => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    res.status(400).json({ errors: errors.array() });
+    res.status(400).json({ errors: errors.array().map((err) => err.msg) });
     return;
   }
 
@@ -18,14 +18,14 @@ const signup = async (req: Request, res: Response): Promise<void> => {
   try {
     let user = await User.findOne({ email });
     if (user) {
-      res.status(400).json({ msg: "User already exists" });
+      res.status(401).json({ error: "User already exists" });
       return;
     }
 
     user = new User({ name, email, password });
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
-    const data = await user.save();
+    await user.save();
 
     const payload = {
       user: {
@@ -39,21 +39,22 @@ const signup = async (req: Request, res: Response): Promise<void> => {
       { expiresIn: 3600 },
       (err, token) => {
         if (err) {
-          throw err;
+          res.status(500).json({ error: "Internal Server Error" });
         }
-        res.json({ token, data });
+        res
+          .status(200)
+          .json({ success: true, msg: "User registered successfully", token });
       }
     );
   } catch (err: any) {
-    console.error(err.message);
-    res.status(500).send({ success: false, message: "Internal Server error." });
+    res.status(500).json({ error: "Internal Server error." });
   }
 };
 
 const login = async (req: Request, res: Response): Promise<void> => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    res.status(400).json({ errors: errors.array() });
+    res.status(400).json({ error: errors.array().map((err) => err.msg) });
     return;
   }
 
@@ -62,13 +63,13 @@ const login = async (req: Request, res: Response): Promise<void> => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      res.status(400).json({ msg: "Invalid Credentials" });
+      res.status(401).json({ status: "failed", error: "Invalid Credentials" });
       return;
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      res.status(400).json({ msg: "Invalid Credentials" });
+      res.status(401).json({ status: "failed", error: "Invalid Credentials" });
       return;
     }
 
@@ -84,21 +85,22 @@ const login = async (req: Request, res: Response): Promise<void> => {
       { expiresIn: 3600 },
       (err, token) => {
         if (err) {
-          throw err;
+          res.status(500).json({ error: "Internal Server Error" });
         }
-        res.send({
+        res.status(200).json({
+          status: "success",
           token,
           user: {
             id: user.id,
             name: user.name,
             email: user.email,
           },
+          msg: "Login Successful",
         });
       }
     );
   } catch (err: any) {
-    console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).json({ error: "Server Error" });
   }
 };
 

@@ -1,12 +1,17 @@
 import { LogOut } from "lucide-react";
 import { Button } from "../ui/button";
 import { SidebarMenuItem } from "../ui/sidebar";
-
+import { useToast } from "@/hooks/use-toast";
 const SignOutButton = () => {
+  const { toast } = useToast();
   const logoutHandler = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("session");
     localStorage.removeItem("authenticated");
+    toast({
+      title: "You have successfully logged out",
+      description: "You have been logged out",
+    });
     window.location.href = "/auth/login";
   };
   return (
