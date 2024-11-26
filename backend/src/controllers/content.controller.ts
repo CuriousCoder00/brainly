@@ -19,13 +19,14 @@ export const createContent = async (
     res.status(400).json({ errors: errors.array() });
     return;
   }
-  const { title, body, link, tags, userId } = req.body;
+  const { title, body, link, type, tags, userId } = req.body;
   try {
     const content = new Content({
       title,
       body,
       link,
       tags,
+      type,
       userId,
     });
     const data = await content.save();
@@ -42,10 +43,15 @@ export const getContent = async (
 ): Promise<void> => {
   try {
     //find content in Content table with userId
-    const data = await Content.find().populate({
-      path: "userId",
-      select: "name email",
-    });
+    const data = await Content.find()
+      .populate({
+        path: "userId",
+        select: "name email",
+      })
+      .populate({
+        path: "tags",
+        select: "name",
+      });
     res.json({ success: true, data });
   } catch (err: any) {
     console.error(err.message);

@@ -21,7 +21,7 @@ const SignOutButton = () => {
         variant={"ghost"}
         onClick={logoutHandler}
       >
-        <LogOut /> Sign Out
+        <LogOut /> Logout
       </Button>
     </SidebarMenuItem>
   );

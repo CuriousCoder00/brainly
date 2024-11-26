@@ -15,6 +15,7 @@ import { userMiddleware } from "../middleware";
 const contentRouter = express.Router();
 
 contentRouter.post("/", contentValidator, userMiddleware, createContent);
+contentRouter.get("/", contentValidator, userMiddleware, getContent);
 contentRouter.get("/u/:userId", getContentByUserId);
 contentRouter.get("/:id", getContentById);
 contentRouter.put("/:id", contentUpdateValidator, updateContent);

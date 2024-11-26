@@ -41,7 +41,6 @@ const AddContent = () => {
   const [tagsList, setTagsList] = useState<{ value: string; label: string }[]>(
     []
   );
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const form = useForm<ContentInput>({
     resolver: zodResolver(contentInput),
@@ -58,17 +57,30 @@ const AddContent = () => {
   const getTags = async () => {
     const { data } = await axios.get(`${BASE_API_URL}/tag/`);
     const tags = data.data.map((tag: any) => ({
-      value: tag.name,
+      value: tag._id,
       label: tag.name.charAt(0).toUpperCase() + tag.name.slice(1),
     }));
     setTagsList(tags);
   };
+
+  const addContent = async (data: ContentInput) => {
+    console.log(data);
+    try {
+      const res = await axios.post(`${BASE_API_URL}/content/`, data);
+      console.log(res.data);
+    } catch (err: any) {
+      console.error(err.message);
+    }
+  };
+
   useEffect(() => {
     getTags();
+    console.log(form.getValues());
   }, []);
+
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button className="dark:bg-sky-500 bg-sky-700 text-white hover:bg-sky-600 dark:hover:bg-sky-600">
           <Plus />
           Add Content
@@ -82,7 +94,10 @@ const AddContent = () => {
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form className="flex flex-col w-full gap-1">
+          <form
+            className="flex flex-col w-full gap-1"
+            onSubmit={form.handleSubmit(addContent)}
+          >
             <FormField
               control={form.control}
               name="title"
@@ -92,7 +107,9 @@ const AddContent = () => {
                   <FormControl>
                     <Input
                       {...field}
-                      placeholder="Title"
+                      ref={null}
+                      placeholder="Content Title"
+                      onChange={(e) => form.setValue("title", e.target.value)}
                       type="text"
                       className="bg-white dark:bg-black"
                     />
@@ -110,8 +127,10 @@ const AddContent = () => {
                   <FormControl>
                     <Input
                       {...field}
-                      placeholder="Title"
+                      ref={null}
+                      placeholder="Content Description"
                       type="text"
+                      onChange={(e) => form.setValue("body", e.target.value)}
                       className="bg-white dark:bg-black"
                     />
                   </FormControl>
@@ -128,7 +147,9 @@ const AddContent = () => {
                   <FormControl>
                     <Input
                       {...field}
-                      placeholder="Title"
+                      ref={null}
+                      placeholder="Content Link"
+                      onChange={(e) => form.setValue("link", e.target.value)}
                       type="text"
                       className="bg-white dark:bg-black"
                     />
@@ -144,7 +165,15 @@ const AddContent = () => {
                 <FormItem>
                   <FormLabel>Content Type</FormLabel>
                   <FormControl>
-                    <Select {...field}>
+                    <Select
+                      {...field}
+                      onValueChange={(value) =>
+                        form.setValue(
+                          "type",
+                          value as "image" | "video" | "article" | "audio"
+                        )
+                      }
+                    >
                       <SelectTrigger>
                         <SelectValue placeholder="Select A Content Type" />
                       </SelectTrigger>
@@ -171,21 +200,22 @@ const AddContent = () => {
                   <FormLabel>Content Tags</FormLabel>
                   <FormControl>
                     <MultiSelect
-                      {...field}
+                      ref={null}
                       options={tagsList}
-                      onValueChange={setSelectedTags}
-                      defaultValue={selectedTags}
-                      placeholder="Select frameworks"
+                      defaultValue={field.value}
+                      onValueChange={(values) => field.onChange(values)}
+                      placeholder="Select Tags"
                       variant="inverted"
                       animation={2}
-                      maxCount={3}
                     />
                   </FormControl>
                   <FormMessage className="text-xs text-red-500 text-end" />
                 </FormItem>
               )}
             />
-            <Button className="mt-4">Add Content</Button>
+            <Button type="submit">
+              Add Content
+            </Button>
           </form>
         </Form>
       </DialogContent>

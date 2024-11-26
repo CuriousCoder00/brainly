@@ -1,4 +1,4 @@
-import { BrainIcon, Calendar, Home, Search, Settings } from "lucide-react";
+import { BrainIcon, Home } from "lucide-react";
 
 import {
   Sidebar,
@@ -35,10 +35,13 @@ export function AppSidebar() {
       <SidebarContent className="dark:bg-black bg-zinc-100">
         <SidebarGroup>
           <SidebarGroupLabel>
-            <div className="flex items-center justify-start gap-2 text-2xl font-bold dark:text-sky-500 text-sky-800">
+            <Link
+              to="/"
+              className="flex items-center justify-start gap-2 text-2xl font-bold dark:text-sky-500 text-sky-800"
+            >
               <BrainIcon className="inline-block text-xl" />
               Brainly
-            </div>
+            </Link>
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="gap-2 mt-4">
