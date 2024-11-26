@@ -3,6 +3,7 @@ import Login from "./pages/login";
 import Signup from "./pages/signup";
 import Home from "./pages/home";
 import MainPage from "./pages/main";
+import { AuthenticatedRoute } from "./hooks/use-private-route";
 
 function App() {
   return (
@@ -12,7 +13,9 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/auth/login" element={<Login />} />
           <Route path="/auth/signup" element={<Signup />} />
-          <Route path="/main" element={<MainPage />} />
+          <Route path="/" element={<AuthenticatedRoute />}>
+            <Route path="/main" element={<MainPage />} />
+          </Route>
         </Routes>
       </Router>
     </div>

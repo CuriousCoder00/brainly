@@ -1,11 +1,8 @@
+import { authenticatedState } from "@/store/atoms/user";
 import { Navigate, Outlet } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 
-const AuthenticateRoute = ({
-  isAuthenticated,
-}: {
-  isAuthenticated: boolean;
-}) => {
+export const AuthenticatedRoute = () => {
+  const isAuthenticated = useRecoilValue(authenticatedState);
   return isAuthenticated ? <Outlet /> : <Navigate replace to="/auth/login" />;
 };
-
-export default AuthenticateRoute;

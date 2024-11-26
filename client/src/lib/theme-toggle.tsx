@@ -1,10 +1,13 @@
 import { Button } from "@/components/ui/button";
-import { SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
-import { useEffect, useState } from "react";
+import { SidebarMenuItem } from "@/components/ui/sidebar";
+import { themeState } from "@/store/atoms/user";
+import { useEffect } from "react";
 import { FaSun, FaMoon } from "react-icons/fa";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 const ThemeToggler = ({ forSidebar }: { forSidebar?: boolean }) => {
-  const [theme, setTheme] = useState("light");
+  const theme = useRecoilValue(themeState);
+  const setTheme = useSetRecoilState(themeState);
   const toggleTheme = () => {
     if (theme === "light") {
       setTheme("dark");
@@ -28,7 +31,11 @@ const ThemeToggler = ({ forSidebar }: { forSidebar?: boolean }) => {
 
   if (forSidebar) {
     return (
-      <Button className="w-full flex items-center justify-start pl-2" variant={"ghost"} onClick={toggleTheme}>
+      <Button
+        className="w-full flex items-center justify-start pl-2"
+        variant={"ghost"}
+        onClick={toggleTheme}
+      >
         {theme === "light" ? (
           <SidebarMenuItem className=" list-none">
             <div className="flex items-center justify-start gap-3">

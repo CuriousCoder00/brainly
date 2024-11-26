@@ -6,12 +6,16 @@ import AuthField from "./auth-input";
 import { LoginInput, loginSchema } from "@/lib/validations/auth.validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_API_URL } from "@/lib/data";
+import { useSetRecoilState } from "recoil";
+import { authenticatedState } from "@/store/atoms/user";
 
 const LoginForm = () => {
   const [isPending, startTransition] = React.useTransition();
+  const setAuthenticated = useSetRecoilState(authenticatedState);
+  const navigate = useNavigate();
   const form = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -25,7 +29,9 @@ const LoginForm = () => {
       axios.post(`${BASE_API_URL}/auth/login`, data).then((res) => {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("session", JSON.stringify(res.data));
-        localStorage.setItem("authenticated", "true");
+        
+        setAuthenticated(true);
+        navigate("/main");
       });
     });
   };

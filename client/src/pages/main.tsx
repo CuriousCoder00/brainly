@@ -1,5 +1,4 @@
 import Layout from "@/components/sidebar-layout";
-
 const MainPage = () => {
   return (
     <Layout>
