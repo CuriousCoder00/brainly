@@ -1,7 +1,6 @@
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Share2 } from "lucide-react";
 import AddContent from "./add-content-dialog";
+import ShareButton from "./share-button";
 
 const AppHeader = () => {
   return (
@@ -14,10 +13,7 @@ const AppHeader = () => {
             className="w-72 bg-white dark:bg-black"
           />
           <div className="flex items-center justify-center gap-3">
-            <Button>
-              <Share2 />
-              Share Brain
-            </Button>
+            <ShareButton/>
             <AddContent />
           </div>
         </div>
