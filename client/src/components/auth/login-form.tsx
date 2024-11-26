@@ -65,7 +65,7 @@ const LoginForm = () => {
   return (
     <AuthForm form={form}>
       <form
-        className="flex flex-col w-full space-y-4  my-4"
+        className="flex flex-col w-full space-y-4 my-4"
         onSubmit={form.handleSubmit(loginHandler)}
       >
         <AuthField

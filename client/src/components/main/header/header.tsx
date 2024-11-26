@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Plus, Share2 } from "lucide-react";
+import { Share2 } from "lucide-react";
 import AddContent from "./add-content-dialog";
 
 const AppHeader = () => {
