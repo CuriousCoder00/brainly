@@ -6,7 +6,6 @@ export const contentInput = z.object({
   link: z.string().url("Invalid URL").nonempty("Link is required"),
   tags: z.array(z.string()).min(1, "Tags are required"),
   type: z.enum(["image", "video", "article", "audio"]),
-  userId: z.string().nonempty(),
 });
 
 export type ContentInput = z.infer<typeof contentInput>;

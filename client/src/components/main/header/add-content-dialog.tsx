@@ -36,12 +36,16 @@ import { useEffect, useState } from "react";
 import { MultiSelect } from "@/components/ui/multi-select";
 import { BASE_API_URL } from "@/lib/data";
 import axios from "axios";
+import useSession from "@/hooks/use-session";
+import { useToast } from "@/hooks/use-toast";
 
 const AddContent = () => {
+  const { session } = useSession();
+  const { toast } = useToast();
   const [tagsList, setTagsList] = useState<{ value: string; label: string }[]>(
     []
   );
-
+  const [isPending, setIsPending] = useState<boolean>(false);
   const form = useForm<ContentInput>({
     resolver: zodResolver(contentInput),
     defaultValues: {
@@ -50,7 +54,6 @@ const AddContent = () => {
       link: "",
       tags: [],
       type: "article",
-      userId: "",
     },
   });
 
@@ -63,19 +66,45 @@ const AddContent = () => {
     setTagsList(tags);
   };
 
-  const addContent = async (data: ContentInput) => {
-    console.log(data);
+  const submitHandler = async (data: ContentInput) => {
+    setIsPending(true);
     try {
-      const res = await axios.post(`${BASE_API_URL}/content/`, data);
-      console.log(res.data);
+      const res = await axios.post(
+        `${BASE_API_URL}/content`,
+        {
+          ...data,
+          userId: session.user.id,
+        },
+        {
+          headers: {
+            Authorization: `${session.token}`,
+          },
+        }
+      );
+      if (res.data.success) {
+        toast({
+          title: "Content Added",
+          description: "Content has been added successfully.",
+        });
+        form.reset();
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "Failed to add content.",
+        });
+      }
     } catch (err: any) {
-      console.error(err.message);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: err.response.data.message,
+      });
     }
   };
 
   useEffect(() => {
     getTags();
-    console.log(form.getValues());
   }, []);
 
   return (
@@ -96,7 +125,7 @@ const AddContent = () => {
         <Form {...form}>
           <form
             className="flex flex-col w-full gap-1"
-            onSubmit={form.handleSubmit(addContent)}
+            onSubmit={form.handleSubmit(submitHandler)}
           >
             <FormField
               control={form.control}
@@ -206,16 +235,13 @@ const AddContent = () => {
                       onValueChange={(values) => field.onChange(values)}
                       placeholder="Select Tags"
                       variant="inverted"
-                      animation={2}
                     />
                   </FormControl>
                   <FormMessage className="text-xs text-red-500 text-end" />
                 </FormItem>
               )}
             />
-            <Button type="submit">
-              Add Content
-            </Button>
+            <Button type="submit">Add Content</Button>
           </form>
         </Form>
       </DialogContent>
