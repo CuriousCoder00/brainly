@@ -64,7 +64,15 @@ export const getContentByUserId = async (
   res: Response
 ): Promise<void> => {
   try {
-    const data = await Content.find({ userId: req.params.userId });
+    const data = await Content.find({ userId: req.params.userId })
+      .populate({
+        path: "tags",
+        select: "name",
+      })
+      .populate({
+        path: "userId",
+        select: "name email",
+      });
     res.json({ success: true, data });
   } catch (err: any) {
     console.error(err.message);

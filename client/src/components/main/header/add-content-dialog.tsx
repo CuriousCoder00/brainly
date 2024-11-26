@@ -87,20 +87,25 @@ const AddContent = () => {
           description: "Content has been added successfully.",
         });
         form.reset();
+        setIsPending(false);
       } else {
         toast({
           variant: "destructive",
           title: "Error",
           description: "Failed to add content.",
         });
+        setIsPending(false);
       }
+      setIsPending(false);
     } catch (err: any) {
       toast({
         variant: "destructive",
         title: "Error",
         description: err.response.data.message,
       });
+      setIsPending(false);
     }
+    setIsPending(false);
   };
 
   useEffect(() => {
@@ -141,6 +146,7 @@ const AddContent = () => {
                       onChange={(e) => form.setValue("title", e.target.value)}
                       type="text"
                       className="bg-white dark:bg-black"
+                      disabled={isPending}
                     />
                   </FormControl>
                   <FormMessage className="text-xs text-red-500 text-end" />
@@ -160,6 +166,7 @@ const AddContent = () => {
                       placeholder="Content Description"
                       type="text"
                       onChange={(e) => form.setValue("body", e.target.value)}
+                      disabled={isPending}
                       className="bg-white dark:bg-black"
                     />
                   </FormControl>
@@ -181,6 +188,7 @@ const AddContent = () => {
                       onChange={(e) => form.setValue("link", e.target.value)}
                       type="text"
                       className="bg-white dark:bg-black"
+                      disabled={isPending}
                     />
                   </FormControl>
                   <FormMessage className="text-xs text-red-500 text-end" />
@@ -202,6 +210,7 @@ const AddContent = () => {
                           value as "image" | "video" | "article" | "audio"
                         )
                       }
+                      disabled={isPending}
                     >
                       <SelectTrigger>
                         <SelectValue placeholder="Select A Content Type" />
@@ -229,6 +238,7 @@ const AddContent = () => {
                   <FormLabel>Content Tags</FormLabel>
                   <FormControl>
                     <MultiSelect
+                      disabled={isPending}
                       ref={null}
                       options={tagsList}
                       defaultValue={field.value}
@@ -241,7 +251,9 @@ const AddContent = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit">Add Content</Button>
+            <Button disabled={isPending} type="submit">
+              Add Content
+            </Button>
           </form>
         </Form>
       </DialogContent>
