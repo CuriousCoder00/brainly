@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
-const contentTypes = ["image", "video", "article", "audio"];
+const contentTypes = ["image", "video", "article", "audio", "tweet"];
 
 const contentSchema = new Schema({
   title: {
@@ -19,7 +19,6 @@ const contentSchema = new Schema({
   },
   link: {
     type: String,
-    required: true,
   },
   tags: [
     {

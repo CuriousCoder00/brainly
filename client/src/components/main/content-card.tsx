@@ -44,7 +44,9 @@ const ContentCard = ({ content }: { content: FetchContentFormat }) => {
         <CardDescription>{content.body}.</CardDescription>
       </CardHeader>
       <CardContent>
-        {content.type === "image" && (
+        {content.type === "image" && content.link ? (
+          <img src={content.link} alt="image" className="aspect-video w-full" />
+        ) : (
           <img src="/imag.png" alt="image" className="aspect-video w-full" />
         )}
         <div className="flex items-center justify-between my-3">

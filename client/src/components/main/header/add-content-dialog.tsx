@@ -191,6 +191,9 @@ const AddContent = () => {
                       disabled={isPending}
                     />
                   </FormControl>
+                  <div className="text-xs text-gray-500 text-end">
+                    In case of Image/Video/Audio provide the link of the media.
+                  </div>
                   <FormMessage className="text-xs text-red-500 text-end" />
                 </FormItem>
               )}
@@ -207,7 +210,7 @@ const AddContent = () => {
                       onValueChange={(value) =>
                         form.setValue(
                           "type",
-                          value as "image" | "video" | "article" | "audio"
+                          value as "image" | "video" | "article" | "audio" | "tweet"
                         )
                       }
                       disabled={isPending}
@@ -222,6 +225,7 @@ const AddContent = () => {
                           <SelectItem value="audio">Audio</SelectItem>
                           <SelectItem value="image">Image</SelectItem>
                           <SelectItem value="video">Video</SelectItem>
+                          <SelectItem value="tweet">Tweet</SelectItem>
                         </SelectGroup>
                       </SelectContent>
                     </Select>
