@@ -17,7 +17,7 @@ export const userState = atom({
 
 export const themeState = atom({
   key: "theme",
-  default: "light",
+  default: "dark",
 });
 
 export const sessionState = atom({
