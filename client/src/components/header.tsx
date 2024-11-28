@@ -11,14 +11,8 @@ const Header = () => {
           Brainly
         </Link>
         <div className="flex items-center justify-center gap-4">
-          <Link to={session ? "/" : "/home"} className="">
-            Home
-          </Link>
           {!session && (
             <div className="flex items-center justify-center gap-4">
-              <Link to={"/auth/signup"} className="">
-                Signup
-              </Link>
               <ThemeToggler />
               <Link
                 className="px-4 py-[7px] rounded-lg text-slate-100 bg-black dark:bg-white dark:text-zinc-950 shadow-inner shadow-slate-200 hover:shadow-md hover:shadow-slate-700 dark:shadow-slate-600 hover:dark:shadow-md hover:dark:border-slate-600 dark:hover:shadow-slate-300 transition-all duration-150"
