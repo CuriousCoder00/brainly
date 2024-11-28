@@ -5,7 +5,8 @@ import Home from "./pages/home";
 import MainPage from "./pages/main";
 import { AuthenticatedRoute } from "./hooks/use-private-route";
 import ArticlesPage from "./pages/articles";
-import Tweets from "./pages/tweets";
+import TweetsPage from "./pages/tweets";
+import VideosPage from "./pages/videos";
 
 function App() {
   return (
@@ -22,7 +23,10 @@ function App() {
             <Route path="/articles" element={<ArticlesPage />} />
           </Route>
           <Route path="/" element={<AuthenticatedRoute />}>
-            <Route path="/tweets" element={<Tweets />} />
+            <Route path="/tweets" element={<TweetsPage />} />
+          </Route>
+          <Route path="/" element={<AuthenticatedRoute />}>
+            <Route path="/videos" element={<VideosPage />} />
           </Route>
         </Routes>
       </Router>
