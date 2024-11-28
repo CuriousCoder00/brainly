@@ -38,6 +38,8 @@ import { BASE_API_URL } from "@/lib/data";
 import axios from "axios";
 import useSession from "@/hooks/use-session";
 import { useToast } from "@/hooks/use-toast";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { contents } from "@/store/atoms/content";
 
 const AddContent = () => {
   const { session } = useSession();
@@ -46,6 +48,8 @@ const AddContent = () => {
     []
   );
   const [isPending, setIsPending] = useState<boolean>(false);
+  const content = useRecoilValue(contents);
+  const setContent = useSetRecoilState(contents);
   const form = useForm<ContentInput>({
     resolver: zodResolver(contentInput),
     defaultValues: {
@@ -82,6 +86,7 @@ const AddContent = () => {
         }
       );
       if (res.data.success) {
+        setContent([...content, res.data.data]);
         toast({
           title: "Content Added",
           description: "Content has been added successfully.",
@@ -210,7 +215,12 @@ const AddContent = () => {
                       onValueChange={(value) =>
                         form.setValue(
                           "type",
-                          value as "image" | "video" | "article" | "audio" | "tweet"
+                          value as
+                            | "image"
+                            | "video"
+                            | "article"
+                            | "audio"
+                            | "tweet"
                         )
                       }
                       disabled={isPending}
