@@ -21,6 +21,8 @@ const ThemeToggler = ({ forSidebar }: { forSidebar?: boolean }) => {
     const localTheme = localStorage.getItem("theme");
     if (localTheme) {
       setTheme(localTheme);
+    } else {
+      localStorage.setItem("theme", "dark");
     }
     if (localTheme === "dark") {
       document.documentElement.classList.add("dark");
