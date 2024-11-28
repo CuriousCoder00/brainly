@@ -9,6 +9,7 @@ import TweetsPage from "./pages/tweets";
 import VideosPage from "./pages/videos";
 import AudiosPage from "./pages/audios";
 import ImagesPage from "./pages/images";
+import NotFound from "./pages/not-found";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/" element={<AuthenticatedRoute />}>
             <Route path="/images" element={<ImagesPage />} />
           </Route>
+          <Route path="*" element={<NotFound/>} />
         </Routes>
       </Router>
     </div>

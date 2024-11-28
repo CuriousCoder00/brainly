@@ -16,7 +16,7 @@ const ImagesPage = () => {
           ))
         ) : (
           <div className="w-full flex items-center justify-center">
-            No images found in the database.
+            No images`` found in the database.
           </div>
         )}
       </div>
