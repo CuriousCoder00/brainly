@@ -5,7 +5,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   Form,
@@ -28,9 +27,9 @@ import { Input } from "@/components/ui/input";
 import {
   contentInput,
   ContentInput,
+  FetchContentFormat,
 } from "@/lib/validations/content.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { MultiSelect } from "@/components/ui/multi-select";
@@ -39,7 +38,12 @@ import axios from "axios";
 import useSession from "@/hooks/use-session";
 import { useToast } from "@/hooks/use-toast";
 
-const AddContent = () => {
+interface EditContentProps {
+  children: React.ReactNode;
+  content: FetchContentFormat;
+}
+
+const EditContent = ({ children, content }: EditContentProps) => {
   const { session } = useSession();
   const { toast } = useToast();
   const [tagsList, setTagsList] = useState<{ value: string; label: string }[]>(
@@ -49,11 +53,11 @@ const AddContent = () => {
   const form = useForm<ContentInput>({
     resolver: zodResolver(contentInput),
     defaultValues: {
-      title: "",
-      body: "",
-      link: undefined,
-      tags: [],
-      type: "article",
+      title: content.title,
+      body: content.body,
+      link: content.link,
+      tags: content.tags.map((tag) => tag._id),
+      type: content.type,
     },
   });
 
@@ -69,8 +73,8 @@ const AddContent = () => {
   const submitHandler = async (data: ContentInput) => {
     setIsPending(true);
     try {
-      const res = await axios.post(
-        `${BASE_API_URL}/content`,
+      const res = await axios.put(
+        `${BASE_API_URL}/content/${content._id}`,
         {
           ...data,
           user: session.user.id,
@@ -83,8 +87,8 @@ const AddContent = () => {
       );
       if (res.data.success) {
         toast({
-          title: "Content Added",
-          description: "Content has been added successfully.",
+          title: "Content Updated",
+          description: "Content has been updated successfully.",
         });
         form.reset();
         setIsPending(false);
@@ -92,7 +96,7 @@ const AddContent = () => {
         toast({
           variant: "destructive",
           title: "Error",
-          description: "Failed to add content.",
+          description: "Failed to Update content.",
         });
         setIsPending(false);
       }
@@ -114,17 +118,12 @@ const AddContent = () => {
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button className="dark:bg-sky-500 bg-sky-700 text-white hover:bg-sky-600 dark:hover:bg-sky-600">
-          <Plus />
-          Add Content
-        </Button>
-      </DialogTrigger>
+      {children}
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add Content</DialogTitle>
+          <DialogTitle>Edit Content</DialogTitle>
           <DialogDescription>
-            Add content to your brain by pasting a link or typing a question.
+            Edit the content details below to update the content.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -210,7 +209,12 @@ const AddContent = () => {
                       onValueChange={(value) =>
                         form.setValue(
                           "type",
-                          value as "image" | "video" | "article" | "audio" | "tweet"
+                          value as
+                            | "image"
+                            | "video"
+                            | "article"
+                            | "audio"
+                            | "tweet"
                         )
                       }
                       disabled={isPending}
@@ -265,4 +269,4 @@ const AddContent = () => {
   );
 };
 
-export default AddContent;
+export default EditContent;

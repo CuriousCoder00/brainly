@@ -11,7 +11,7 @@ export const contentInput = z.object({
 export type ContentInput = z.infer<typeof contentInput>;
 
 export const fetchContentFormat = z.object({
-  id: z.string(),
+  _id: z.string(),
   title: z.string(),
   body: z.string(),
   link: z.string(),
