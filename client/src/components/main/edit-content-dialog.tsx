@@ -50,6 +50,7 @@ const EditContent = ({ children, content }: EditContentProps) => {
     []
   );
   const [isPending, setIsPending] = useState<boolean>(false);
+
   const form = useForm<ContentInput>({
     resolver: zodResolver(contentInput),
     defaultValues: {
@@ -260,7 +261,7 @@ const EditContent = ({ children, content }: EditContentProps) => {
               )}
             />
             <Button disabled={isPending} type="submit">
-              Add Content
+              Save
             </Button>
           </form>
         </Form>

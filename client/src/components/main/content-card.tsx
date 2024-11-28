@@ -47,7 +47,7 @@ const ContentCard = ({ content }: { content: FetchContentFormat }) => {
   const tweetId = content.link?.split("/")[tweetA - 1];
 
   return (
-    <Card className="w-full max-h-[450px] shadow-inner shadow-zinc-400">
+    <Card className="w-full shadow-inner shadow-zinc-400">
       <CardHeader>
         <div className="flex items-start justify-start w-full gap-2">
           {content.type === "video" ? (
@@ -64,6 +64,7 @@ const ContentCard = ({ content }: { content: FetchContentFormat }) => {
             <MoreOptions content={content} />
           </div>
         </div>
+
         <CardDescription>{content.body}.</CardDescription>
       </CardHeader>
       <CardContent>
@@ -113,19 +114,22 @@ const ContentCard = ({ content }: { content: FetchContentFormat }) => {
               className="w-full h-40 object-contain"
             />
           )}
-        <div className="flex items-center justify-between my-3">
-          <Badge>{content.user.name}</Badge>
-          {content.link && (
-            <Link to={content.link} target="_blank" rel="noreferrer">
-              <Link2 />
-            </Link>
-          )}
-        </div>
       </CardContent>
-      <CardFooter className="flex justify-start items-center flex-wrap gap-1">
-        {content.tags.map((tag, idx) => (
-          <Badge key={idx}>#{tag.name}</Badge>
-        ))}
+      <CardFooter className="w-full">
+        <div className="flex items-center justify-between my-3 w-full">
+          <div className="flex justify-start items-center flex-wrap gap-1">
+            {content.tags.map((tag, idx) => (
+              <Badge key={idx}>#{tag.name}</Badge>
+            ))}
+          </div>
+          <div>
+            {content.link && (
+              <Link to={content.link} target="_blank" rel="noreferrer">
+                <Link2 />
+              </Link>
+            )}
+          </div>
+        </div>
       </CardFooter>
     </Card>
   );
