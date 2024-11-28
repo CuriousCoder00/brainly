@@ -8,6 +8,7 @@ import ArticlesPage from "./pages/articles";
 import TweetsPage from "./pages/tweets";
 import VideosPage from "./pages/videos";
 import AudiosPage from "./pages/audios";
+import ImagesPage from "./pages/images";
 
 function App() {
   return (
@@ -31,6 +32,9 @@ function App() {
           </Route>
           <Route path="/" element={<AuthenticatedRoute />}>
             <Route path="/audios" element={<AudiosPage />} />
+          </Route>
+          <Route path="/" element={<AuthenticatedRoute />}>
+            <Route path="/images" element={<ImagesPage />} />
           </Route>
         </Routes>
       </Router>

@@ -16,7 +16,7 @@ const AudiosPage = () => {
           ))
         ) : (
           <div className="w-full flex items-center justify-center">
-            No tweets found in the database.
+            No audios found in the database.
           </div>
         )}
       </div>

@@ -50,7 +50,7 @@ const items = [
   },
   {
     title: "Audio",
-    url: "#",
+    url: "/audios",
     icon: AudioLines,
   },
 ];
