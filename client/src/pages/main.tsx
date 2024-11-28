@@ -1,5 +1,4 @@
 import ContentCard from "@/components/main/content-card";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import useSession from "@/hooks/use-session";
 import { BASE_API_URL } from "@/lib/data";
 import { FetchContentFormat } from "@/lib/validations/content.validation";
@@ -29,14 +28,20 @@ const MainPage = () => {
     fetchContent();
   }, []);
   return (
-    <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-4 w-full">
-      {content.length < 1 && isPending ? (
-        <div>No content found yet..!!</div>
-      ) : (
-        content.map((content) => (
-          <ContentCard key={content._id} content={content} />
-        ))
-      )}
+    <div className="flex flex-col items-start justify-start">
+      <h1 className="mb-4 font-bold text-xl">All Contents</h1>
+      <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-4 w-full">
+        {isPending ? (
+          <div className="w-full flex items-center justify-center">
+            <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+          </div>
+        ) : (
+          content.length > 0 &&
+          content.map((content: FetchContentFormat) => (
+            <ContentCard key={content._id} content={content} />
+          ))
+        )}
+      </div>
     </div>
   );
 };

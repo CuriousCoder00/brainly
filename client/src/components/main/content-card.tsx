@@ -39,6 +39,8 @@ import { BASE_API_URL } from "@/lib/data";
 import axios from "axios";
 import { Tweet } from "react-tweet";
 import { ScrollArea } from "../ui/scroll-area";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { contents } from "@/store/atoms/content";
 
 const ContentCard = ({ content }: { content: FetchContentFormat }) => {
   const tweetA = content.link?.split("/").length;
@@ -154,7 +156,8 @@ export default ContentCard;
 const DeleteButton = ({ id }: { id: string }) => {
   const { session } = useSession();
   const { toast } = useToast();
-
+  const content = useRecoilValue(contents);
+  const setContent = useSetRecoilState(contents);
   const [isPending, setIsPending] = useState<boolean>(false);
 
   const deleteHandler = async () => {
@@ -166,6 +169,7 @@ const DeleteButton = ({ id }: { id: string }) => {
         },
       });
       if (res.data.success) {
+        setContent(content.filter((item) => item._id !== id));
         toast({
           title: "Content Deleted",
           description: "Content has been Deleted successfully.",

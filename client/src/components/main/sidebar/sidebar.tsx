@@ -1,4 +1,11 @@
-import { BrainIcon, Home, NotepadText, Image, Video, AudioLines } from "lucide-react";
+import {
+  BrainIcon,
+  Home,
+  NotepadText,
+  Image,
+  Video,
+  AudioLines,
+} from "lucide-react";
 
 import {
   Sidebar,
@@ -23,22 +30,22 @@ const items = [
   },
   {
     title: "Article",
-    url: "#",
+    url: "/articles",
     icon: NotepadText,
   },
   {
-    title: "Twitter",
-    url: "#",
+    title: "Tweets",
+    url: "/tweets",
     icon: FaTwitter,
   },
   {
     title: "Videos",
-    url: "#",
+    url: "/videos",
     icon: Video,
   },
   {
     title: "Images",
-    url: "#",
+    url: "/images",
     icon: Image,
   },
   {
