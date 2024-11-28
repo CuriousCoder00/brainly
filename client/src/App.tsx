@@ -7,6 +7,7 @@ import { AuthenticatedRoute } from "./hooks/use-private-route";
 import ArticlesPage from "./pages/articles";
 import TweetsPage from "./pages/tweets";
 import VideosPage from "./pages/videos";
+import AudiosPage from "./pages/audios";
 
 function App() {
   return (
@@ -27,6 +28,9 @@ function App() {
           </Route>
           <Route path="/" element={<AuthenticatedRoute />}>
             <Route path="/videos" element={<VideosPage />} />
+          </Route>
+          <Route path="/" element={<AuthenticatedRoute />}>
+            <Route path="/audios" element={<AudiosPage />} />
           </Route>
         </Routes>
       </Router>
