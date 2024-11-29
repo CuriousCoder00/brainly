@@ -47,7 +47,7 @@ const signup = async (req: Request, res: Response): Promise<void> => {
       }
     );
   } catch (err: any) {
-    res.status(500).json({ error: "Internal Server error." });
+    res.json({ error: "Internal Server error." });
   }
 };
 
