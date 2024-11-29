@@ -27,7 +27,7 @@ const SignupForm = () => {
     setIsPending(true);
     try {
       const res = await axios.post(`${BASE_API_URL}/auth/signup`, data);
-      if (res.status === 200  && res.data.status === "success") {
+      if (res.status === 200 && res.data.status === "success") {
         form.reset();
         toast({
           title: res?.data.msg,
@@ -47,6 +47,7 @@ const SignupForm = () => {
       }
       setIsPending(false);
     } catch (error: any) {
+      console.log(error);
       toast({
         variant: "destructive",
         type: "background",
