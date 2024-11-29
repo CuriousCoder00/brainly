@@ -38,7 +38,7 @@ const LoginForm = () => {
           title: res?.data.msg,
           description: "You have successfully logged in",
         });
-        navigate("/");
+        navigate("/app");
         setIsPending(false);
       }
       if (res.data.status === "failed") {

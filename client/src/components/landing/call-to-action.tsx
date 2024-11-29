@@ -1,4 +1,4 @@
-import { Button } from "../ui/button";
+import { Link } from "react-router-dom";
 
 const CallToAction = () => {
   return (
@@ -12,9 +12,16 @@ const CallToAction = () => {
             Join thousands of users who are already managing their digital
             content more effectively.
           </p>
-          <Button size="lg" className="mt-4">
-            Start for free
-          </Button>
+          <Link
+            className="bg-black dark:bg-white text-white dark:text-black rounded-md px-6 py-2 shadow-inner hover:shadow-none hover:bg-gray-800 dark:hover:bg-gray-200 my-8 mt-4 relative overflow-hidden group"
+            to="/auth/signup"
+          >
+            <span className="relative z-10">Start for free</span>
+            <span
+              className="absolute inset-0 animate-pulse-glow bg-gradient-to-r from-primary/60 to-secondary/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              aria-hidden="true"
+            ></span>
+          </Link>
         </div>
       </div>
     </div>

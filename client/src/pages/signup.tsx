@@ -9,7 +9,7 @@ const Signup = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (session) {
-      navigate("/");
+      navigate("/app");
     }
   }, [navigate, session]);
   return (

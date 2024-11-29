@@ -25,7 +25,7 @@ import { Link, useLocation } from "react-router-dom";
 const items = [
   {
     title: "Home",
-    url: "/",
+    url: "/app",
     icon: Home,
   },
   {
