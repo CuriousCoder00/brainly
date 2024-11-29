@@ -60,12 +60,21 @@ const ContentCard = ({ content }: { content: FetchContentFormat }) => {
             <AudioLines />
           )}
           <div className="flex items-center justify-between w-full">
-            <CardTitle>{content.title}</CardTitle>
+            <CardTitle>
+              {content.title.length < 50
+                ? content.title
+                : content.title.slice(0, 50) + "..."}
+            </CardTitle>
             <MoreOptions content={content} />
           </div>
         </div>
 
-        <CardDescription>{content.body}.</CardDescription>
+        <CardDescription>
+          {content.body.length < 150
+            ? content.body
+            : content.body.slice(0, 150) + "..."}
+          .
+        </CardDescription>
       </CardHeader>
       <CardContent>
         {content.type === "image" && (
