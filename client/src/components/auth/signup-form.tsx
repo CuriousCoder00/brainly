@@ -27,7 +27,8 @@ const SignupForm = () => {
     setIsPending(true);
     try {
       const res = await axios.post(`${BASE_API_URL}/auth/signup`, data);
-      if (res.status === 200) {
+      if (res.status === 200  && res.data.status === "success") {
+        form.reset();
         toast({
           title: res?.data.msg,
           description: "You have successfully signed up",
@@ -35,7 +36,7 @@ const SignupForm = () => {
         navigate("/auth/login");
         setIsPending(false);
       }
-      if (res.status === 401) {
+      if (res.data.status === "failed") {
         toast({
           variant: "destructive",
           type: "background",
@@ -50,7 +51,6 @@ const SignupForm = () => {
         variant: "destructive",
         type: "background",
         title: error.response.data.error,
-        description: "An error occured while trying to Signup",
       });
       setIsPending(false);
     }

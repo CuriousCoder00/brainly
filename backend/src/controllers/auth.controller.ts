@@ -18,7 +18,7 @@ const signup = async (req: Request, res: Response): Promise<void> => {
   try {
     let user = await User.findOne({ email });
     if (user) {
-      res.status(401).json({success: false, error: "User already exists" });
+      res.status(401).json({success: "failed", error: "User already exists" });
       return;
     }
 

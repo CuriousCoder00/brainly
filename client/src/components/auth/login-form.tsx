@@ -56,7 +56,6 @@ const LoginForm = () => {
         variant: "destructive",
         type: "background",
         title: error.response.data.error,
-        description: "An error occured while trying to login",
       });
       setIsPending(false);
     }
