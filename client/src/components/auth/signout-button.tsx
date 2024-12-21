@@ -15,7 +15,7 @@ const SignOutButton = () => {
     window.location.href = "/auth/login";
   };
   return (
-    <SidebarMenuItem className=" list-none">
+    <SidebarMenuItem className="w-full list-none">
       <Button
         className="w-full flex items-center justify-start gap-3 px-2"
         variant={"ghost"}

@@ -10,9 +10,9 @@ const AppHeader = () => {
           <Input
             placeholder="Search.."
             type="search"
-            className="w-72 bg-white dark:bg-black"
+            className="w-72 bg-white dark:bg-black max-md:hidden"
           />
-          <div className="flex items-center justify-center gap-3">
+          <div className="flex items-center justify-center max-md:justify-end max-md:w-full gap-3">
             <ShareButton/>
             <AddContent />
           </div>

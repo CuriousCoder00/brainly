@@ -21,6 +21,7 @@ import ThemeToggler from "@/lib/theme-toggle";
 import { FaTwitter } from "react-icons/fa";
 import SignOutButton from "../../auth/signout-button";
 import { Link, useLocation } from "react-router-dom";
+import { Input } from "@/components/ui/input";
 
 const items = [
   {
@@ -58,8 +59,8 @@ const items = [
 export function AppSidebar() {
   const location = useLocation();
   return (
-    <Sidebar>
-      <SidebarContent className="dark:bg-black bg-zinc-100">
+    <Sidebar className="dark:bg-black bg-zinc-100 max-md:w-60">
+      <SidebarContent className="dark:bg-black bg-zinc-100 max-md:w-60">
         <SidebarGroup>
           <SidebarGroupLabel>
             <Link
@@ -71,7 +72,14 @@ export function AppSidebar() {
             </Link>
           </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu className="gap-2 mt-4">
+            <SidebarMenu className="mt-4">
+              <SidebarMenuItem className="md:hidden flex px-0">
+                  <Input
+                    placeholder="Search.."
+                    type="search"
+                    className="w-full bg-white dark:bg-black"
+                  />
+              </SidebarMenuItem>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild className="rounded-none">
@@ -93,7 +101,7 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <div className="flex flex-col dark:bg-black bg-zinc-100">
+      <div className="flex flex-col dark:bg-black bg-zinc-100 w-full">
         <SignOutButton />
         <ThemeToggler forSidebar />
       </div>
